@@ -7,6 +7,13 @@ import requests
 # Set the path to the script you want to restart
 script_to_restart = "sahil.py"
 
+# Flask app for health check
+app = Flask(name)
+
+@app.route('/health', methods=['GET'])
+def health():
+    return "OK", 200
+
 # Set your GitHub Personal Access Token
 GITHUB_TOKEN = "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"
 
@@ -105,6 +112,12 @@ def main():
         process.wait()
         process = restart_script_locally()
 
-if __name__ == "__main__":
-    main()
+# Start the Flask app in a separate thread
+def run_flask():
+    app.run(host='0.0.0.0', port=10001)
+
+Thread(target=run_flask).start()
+
+
+            
   
