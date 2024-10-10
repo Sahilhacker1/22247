@@ -3,12 +3,14 @@ import signal
 import time
 import subprocess
 import requests
+from flask import Flask
+from threading import Thread
 
 # Set the path to the script you want to restart
 script_to_restart = "sahil.py"
 
 # Flask app for health check
-app = Flask(name)
+app = Flask(__name__)
 
 @app.route('/health', methods=['GET'])
 def health():
